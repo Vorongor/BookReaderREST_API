@@ -29,6 +29,18 @@ export class Book {
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   owner: User;
+
+  @Prop({
+    type: {
+      rate: { type: Number, min: 1, max: 5, required: true },
+      comment: { type: String, required: false },
+    },
+    required: false,
+  })
+  review: {
+    rate: number;
+    comment: string;
+  };
 }
 
 export const BookSchema = SchemaFactory.createForClass(Book);

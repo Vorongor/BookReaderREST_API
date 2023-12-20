@@ -1,7 +1,6 @@
 import { MongooseModule } from '@nestjs/mongoose';
+import { dbSets } from 'src/constans';
 
 export const DatabaseProvider = [
-  MongooseModule.forRoot(
-    'mongodb+srv://BookReaderNest:REaUHJJD50suogBQ@bookreaderclaster.dzfrxhv.mongodb.net/bookreader',
-  ),
+  MongooseModule.forRoot(dbSets.url || process.env.DATABASE_URL),
 ];

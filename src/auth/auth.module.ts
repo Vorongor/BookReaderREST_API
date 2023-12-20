@@ -5,7 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { User, UserSchema } from 'src/schemas/user.schema';
 import { LocalStrategy } from './midleware/pasport';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from './constans';
+import { jwtConstants } from '../constans';
 import { JwtStrategy } from './midleware/jwtPasport';
 import { GoogleStrategy } from './midleware/googlepasport';
 

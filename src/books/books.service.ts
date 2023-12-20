@@ -25,10 +25,48 @@ export class BooksService {
     return library;
   }
 
-  async current(userId, bookID): Promise<any> {
-    const book = await this.bookModel.find({ _id: bookID, owner: userId });
+  async current(userID, bookID): Promise<any> {
+    const book = await this.bookModel.find({ _id: bookID, owner: userID });
     return book;
   }
+
+  async update(userID, state, bookID, pagesRead): Promise<any> {
+    let book;
+    if (state) {
+      book = await this.bookModel.findOneAndUpdate(
+        {
+          _id: bookID,
+          owner: userID,
+        },
+        { state },
+        { new: true },
+      );
+    }
+    if (pagesRead) {
+      book = await this.bookModel.findOneAndUpdate(
+        {
+          _id: bookID,
+          owner: userID,
+        },
+        { pagesRead },
+        { new: true },
+      );
+    }
+
+    await book.save();
+    return book;
+  }
+
+  async updateReview(userID, bookID, review): Promise<any> {
+    const book = await this.bookModel.findOneAndUpdate(
+      { _id: bookID, owner: userID },
+      { review },
+      { new: true },
+    );
+
+    return book;
+  }
+
   async delete(userId, bookID): Promise<any> {
     const book = await this.bookModel.findOneAndDelete({
       _id: bookID,
