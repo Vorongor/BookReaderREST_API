@@ -10,7 +10,6 @@ import { TrainingModule } from './training/training.module';
 @Module({
   imports: [
     DatabaseModule,
-
     AuthModule,
     UsersModule,
     BooksModule,

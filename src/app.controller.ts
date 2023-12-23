@@ -9,9 +9,4 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
-
-  @Get('api/:id')
-  getId(@Param('id', ParseIntPipe) id: number): string {
-    return `Your id is: ${id}`;
-  }
 }
