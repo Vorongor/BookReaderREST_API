@@ -15,7 +15,6 @@ import { Request, Response } from 'express';
 import { UserDocument } from 'src/schemas/user.schema';
 import { BooksService } from './books.service';
 import { CreateBookDto, ReviewDto } from './dto/books.dto';
-import { Book } from 'src/schemas/book.schema';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
 @Controller('books')

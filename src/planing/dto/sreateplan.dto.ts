@@ -1,10 +1,9 @@
-import { ApiProperty } from '@nestjs/swagger';
 import { IsInt, IsPositive, IsString } from 'class-validator';
-
-export class CreateTrainingDto {
+import { ApiProperty } from '@nestjs/swagger';
+export class CreatePlanDto {
   @ApiProperty({ example: '657daddde9f7ee386f16485a' })
   @IsString({ message: 'The comment must be a string.' })
-  readonly planID: string;
+  readonly bookID: string;
 
   @ApiProperty({
     example: 1640995200,
@@ -12,13 +11,13 @@ export class CreateTrainingDto {
   })
   @IsInt({ message: 'Time must be an integer.' })
   @IsPositive({ message: 'Time must be a positive number.' })
-  readonly time: number;
+  readonly startTime: number;
 
   @ApiProperty({
-    example: 16,
-    description: 'Result must be a positive number',
+    example: 1643673600,
+    description: 'Finish time in Unix format',
   })
-  @IsInt({ message: 'Result must be an integer.' })
-  @IsPositive({ message: 'Result must be a positive number.' })
-  readonly result: number;
+  @IsInt({ message: 'Time must be an integer.' })
+  @IsPositive({ message: 'Time must be a positive number.' })
+  readonly finishTime: number;
 }
