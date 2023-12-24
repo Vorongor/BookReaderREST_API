@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   Param,
   Post,
   Req,
@@ -18,6 +19,16 @@ import { CreatePlanDto } from './dto/sreateplan.dto';
 @Controller('planing')
 export class PlaningController {
   constructor(private planService: PlaningService) {}
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('all')
+  async getAll(@Req() req: Request, @Res() res: Response) {
+    const user = req.user as UserDocument;
+    const plans = await this.planService.getall(user._id);
+    return res
+      .status(200)
+      .json({ data: plans, message: 'Plans has been fetched successfully.' });
+  }
 
   @ApiTags('Training')
   @UseGuards(AuthGuard('jwt'))

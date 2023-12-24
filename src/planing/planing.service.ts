@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Book, BookDocument } from 'src/schemas/book.schema';
@@ -10,6 +10,14 @@ export class PlaningService {
     @InjectModel(Plan.name) private planModel: Model<PlanDocument>,
     @InjectModel(Book.name) private bookModel: Model<BookDocument>,
   ) {}
+
+  async getall(userID) {
+    const plans = await this.planModel.find({ owner: userID });
+    if (plans.length === 0) {
+      throw new BadRequestException('Can`n Found any plans');
+    }
+    return plans;
+  }
 
   async create(userID, createPlanDto): Promise<any> {
     const book = await this.bookModel.findOneAndUpdate(
