@@ -16,10 +16,24 @@ import { UserDocument } from 'src/schemas/user.schema';
 import { BooksService } from './books.service';
 import { CreateBookDto, ReviewDto } from './dto/books.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { CreatePlanDto } from './dto/createplan.dto';
+import { CreateTrainingDto } from './dto/training.dto';
 
 @Controller('books')
 export class BooksController {
   constructor(private bookService: BooksService) {}
+
+  @ApiTags('Books')
+  @UseGuards(AuthGuard('jwt'))
+  @Get('all')
+  @ApiBearerAuth()
+  async getAll(@Req() req: Request, @Res() res: Response) {
+    const user = req.user as UserDocument;
+    const books = await this.bookService.getall(user._id);
+    return res
+      .status(200)
+      .json({ data: books, message: 'Books retrieved successfully.' });
+  }
 
   @ApiTags('Books')
   @UseGuards(AuthGuard('jwt'))
@@ -39,14 +53,40 @@ export class BooksController {
 
   @ApiTags('Books')
   @UseGuards(AuthGuard('jwt'))
-  @Get('all')
+  @Post('plan/:id')
   @ApiBearerAuth()
-  async getAll(@Req() req: Request, @Res() res: Response) {
+  async addPlan(
+    @Req() req: Request,
+    @Param('id') id: string,
+    @Body() createPlanDto: CreatePlanDto,
+    @Res() res: Response,
+  ) {
     const user = req.user as UserDocument;
-    const books = await this.bookService.getall(user._id);
+    const book = await this.bookService.createPlan(user._id, id, createPlanDto);
     return res
-      .status(200)
-      .json({ data: books, message: 'Books retrieved successfully.' });
+      .status(201)
+      .json({ data: book, message: 'Book`s plan successfully added.' });
+  }
+
+  @ApiTags('Books')
+  @UseGuards(AuthGuard('jwt'))
+  @Post('training/:id')
+  @ApiBearerAuth()
+  async addTraining(
+    @Req() req: Request,
+    @Param('id') id: string,
+    @Body() createTrainingDto: CreateTrainingDto,
+    @Res() res: Response,
+  ) {
+    const user = req.user as UserDocument;
+    const book = await this.bookService.addTraining(
+      user._id,
+      id,
+      createTrainingDto,
+    );
+    return res
+      .status(201)
+      .json({ data: book, message: 'Book`s training successfully added.' });
   }
 
   @ApiTags('Books')

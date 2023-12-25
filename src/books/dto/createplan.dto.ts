@@ -1,10 +1,7 @@
 import { IsInt, IsPositive, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
-export class CreatePlanDto {
-  @ApiProperty({ example: '657daddde9f7ee386f16485a' })
-  @IsString({ message: 'The comment must be a string.' })
-  readonly bookID: string;
 
+export class CreatePlanDto {
   @ApiProperty({
     example: 1640995200,
     description: 'Start time in Unix format',

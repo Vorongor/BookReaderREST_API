@@ -5,18 +5,9 @@ import { DatabaseModule } from './database/database.module';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { BooksModule } from './books/books.module';
-import { TrainingModule } from './training/training.module';
-import { PlaningModule } from './planing/planing.module';
 
 @Module({
-  imports: [
-    DatabaseModule,
-    AuthModule,
-    UsersModule,
-    BooksModule,
-    TrainingModule,
-    PlaningModule,
-  ],
+  imports: [DatabaseModule, AuthModule, UsersModule, BooksModule],
   controllers: [AppController],
   providers: [AppService],
 })

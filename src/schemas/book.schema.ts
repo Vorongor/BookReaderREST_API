@@ -32,6 +32,29 @@ export class Book {
 
   @Prop({
     type: {
+      startTime: { type: Number, required: true },
+      finishTime: { type: Number, required: true },
+    },
+    required: false,
+  })
+  plan: {
+    startTime: number;
+    finishTime: number;
+  };
+
+  @Prop({
+    type: [
+      {
+        date: { type: Number, required: true },
+        result: { type: Number, required: true },
+      },
+    ],
+    default: [],
+  })
+  training: Array<{ date: number; result: number }>;
+
+  @Prop({
+    type: {
       rate: { type: Number, min: 1, max: 5, required: true },
       comment: { type: String, required: false },
     },

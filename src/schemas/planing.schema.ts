@@ -17,8 +17,6 @@ export class Plan {
   startTime: number;
 
   @Prop({ required: true })
-  finishTime: number;
-
   @Prop({ required: true })
   pages: number;
 
