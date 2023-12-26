@@ -40,13 +40,15 @@ export class CreateBookDto {
   @IsEnum(['new', 'reading', 'finished', 'canceled'], {
     message: 'Invalid book status.',
   })
-  readonly state: 'new' | 'reading' | 'finished' | 'canceled';
+  @IsOptional()
+  readonly state?: 'new' | 'reading' | 'finished' | 'canceled';
 
   @IsInt({ message: 'The number of pages read must be an integer.' })
   @Min(0, {
     message: 'The number of pages read cannot be less than 0.',
   })
-  readonly pagesRead: number;
+  @IsOptional()
+  readonly pagesRead?: number;
 
   @IsObject({ message: 'The review must be an object.' })
   @ValidateNested()

@@ -24,7 +24,7 @@ export class Book {
   })
   state: string;
 
-  @Prop({})
+  @Prop({ default: 0 })
   pagesRead: number;
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
