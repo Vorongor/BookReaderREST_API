@@ -65,6 +65,33 @@ export class BooksService {
       throw new BadRequestException('Here no plan for reading this book');
     }
 
+    if (book.pagesRead + createTrainingDto.result > book.pages) {
+      throw new BadRequestException('You can`t read more pages than book have');
+    }
+    if (book.pagesRead + createTrainingDto.result === book.pages) {
+      const updatedBook = await this.bookModel.findOneAndUpdate(
+        {
+          _id: bookID,
+          owner: userID,
+        },
+        {
+          training: [
+            ...book.training,
+            {
+              date: createTrainingDto.date,
+              result: createTrainingDto.result,
+            },
+          ],
+          pagesRead: book.pagesRead + createTrainingDto.result,
+          state: 'finished',
+        },
+        { new: true },
+      );
+      await updatedBook.save();
+
+      return updatedBook;
+    }
+
     const updatedBook = await this.bookModel.findOneAndUpdate(
       {
         _id: bookID,
@@ -75,7 +102,7 @@ export class BooksService {
           ...book.training,
           { date: createTrainingDto.date, result: createTrainingDto.result },
         ],
-        state: 'reading',
+        pagesRead: book.pagesRead + createTrainingDto.result,
       },
       { new: true },
     );
