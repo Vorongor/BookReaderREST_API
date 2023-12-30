@@ -7,7 +7,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Book, BookDocument } from 'src/schemas/book.schema';
 
-import { CreateBookDto } from './dto/books.dto';
+import { CreateBookDto, ReviewDto } from './dto/books.dto';
 import { CreatePlanDto } from './dto/createplan.dto';
 import { CreateTrainingDto } from './dto/training.dto';
 
@@ -162,11 +162,19 @@ export class BooksService {
     return book;
   }
 
-  async updateReview(userID: string, bookID: string, review): Promise<any> {
+  async updateReview(
+    userID: string,
+    bookID: string,
+    review: ReviewDto,
+  ): Promise<any> {
     const book = await this.bookModel.findOneAndUpdate(
       { _id: bookID, owner: userID },
       { review },
       { new: true },
+    );
+    console.log(
+      '🚀 ~ file: books.service.ts:173 ~ BooksService ~ review:',
+      review,
     );
     if (!book) {
       throw new NotFoundException(`Book with ID ${bookID} not found`);

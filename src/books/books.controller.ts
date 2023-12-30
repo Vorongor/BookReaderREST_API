@@ -131,7 +131,7 @@ export class BooksController {
   async updateReview(
     @Req() req: Request,
     @Param('id') id: string,
-    @Body('review') review: ReviewDto,
+    @Body() review: ReviewDto,
     @Res() res: Response,
   ) {
     const user = req.user as UserDocument;
